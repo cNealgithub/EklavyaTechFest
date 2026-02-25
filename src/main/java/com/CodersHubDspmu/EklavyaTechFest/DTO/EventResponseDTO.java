@@ -1,16 +1,14 @@
 package com.CodersHubDspmu.EklavyaTechFest.DTO;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EventRequestDTO {
+@Data
+public class EventResponseDTO {
+    private long id;
     private String name;
     private String category;
     private int max_registration;

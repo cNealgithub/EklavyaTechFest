@@ -18,15 +18,14 @@ import java.util.Map;
 @Entity
 public class Registrations {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(unique = true, nullable = false)
-    private String registrationCode;
     private String status;
-    @CreatedDate
-    private LocalDateTime registeredOn;
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
     private Users user;
+    @CreatedDate
+    private LocalDateTime registeredOn;
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
     private Events event;
