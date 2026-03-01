@@ -1,5 +1,6 @@
 package com.CodersHubDspmu.EklavyaTechFest.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,5 +28,7 @@ public class Users {
     @Column(nullable = false)
     private String fullAddress;
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Registrations> registrations;
+
 }

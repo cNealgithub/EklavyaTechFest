@@ -1,5 +1,6 @@
 package com.CodersHubDspmu.EklavyaTechFest.Entity;
 
+import com.CodersHubDspmu.EklavyaTechFest.Util.JsonToMapConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -29,8 +30,8 @@ public class Registrations {
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
     private Events event;
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "json")
+    @Convert(converter = JsonToMapConverter.class)
+    @Column(name = "event_data", columnDefinition = "json")
     private Map<String, Object> eventData;
 
 }

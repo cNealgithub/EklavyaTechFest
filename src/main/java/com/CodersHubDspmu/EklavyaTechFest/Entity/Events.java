@@ -18,7 +18,7 @@ public class Events {
     private long id;
     private String name;
     private String category;
-    private int max_registration;
+    private Integer max_registration;
 //    @OneToMany(mappedBy = "event")
 //    private List<Registrations> registrations;
 }

@@ -11,5 +11,5 @@ public class EventResponseDTO {
     private long id;
     private String name;
     private String category;
-    private int max_registration;
+    private Integer max_registration;
 }

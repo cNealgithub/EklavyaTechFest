@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +46,12 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO findUserById(long id) {
         Users user = repo.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException("User not found with id: " + id));
+        return modelMapper.map(user, UserResponseDTO.class);
+    }
+
+    @Override
+    public UserResponseDTO findUserByEmail(String email) {
+        Optional<Users> user = repo.findByEmail(email);
         return modelMapper.map(user, UserResponseDTO.class);
     }
 

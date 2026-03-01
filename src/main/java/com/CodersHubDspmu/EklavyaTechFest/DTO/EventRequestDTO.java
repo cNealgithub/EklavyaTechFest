@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class EventRequestDTO {
     private String name;
     private String category;
-    private int max_registration;
+    private Integer max_registration;
 }
