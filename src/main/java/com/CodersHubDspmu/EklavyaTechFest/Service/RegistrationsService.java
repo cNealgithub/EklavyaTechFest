@@ -2,7 +2,6 @@ package com.CodersHubDspmu.EklavyaTechFest.Service;
 
 import com.CodersHubDspmu.EklavyaTechFest.DTO.RegistrationsRequestDTO;
 import com.CodersHubDspmu.EklavyaTechFest.DTO.RegistrationsResponseDTO;
-import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -12,4 +11,6 @@ public interface RegistrationsService {
      List<RegistrationsResponseDTO> getAllUsers();
 
      RegistrationsResponseDTO findRegistrationById(long id);
+
+     List<RegistrationsResponseDTO> findRegistrationByUserEmail(String userEmail);
 }

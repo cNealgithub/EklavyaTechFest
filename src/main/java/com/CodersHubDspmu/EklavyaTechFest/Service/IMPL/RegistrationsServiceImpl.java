@@ -62,4 +62,15 @@ public class RegistrationsServiceImpl implements RegistrationsService {
                 orElseThrow(()-> new RuntimeException("Registration not found with id: "+id));
         return modelMapper.map(registration, RegistrationsResponseDTO.class);
     }
+
+    @Override
+    public List<RegistrationsResponseDTO> findRegistrationByUserEmail(String userEmail) {
+        List<Registrations> registrationsList = registrationsRepo.findByUserEmail(userEmail);
+        if(registrationsList.isEmpty()){
+            throw new RuntimeException("No Registration find associated to email: "+userEmail);
+        }
+        return registrationsList.stream()
+                .map(registrations -> modelMapper.map(registrations,RegistrationsResponseDTO.class))
+                .collect(Collectors.toList());
+    }
 }

@@ -29,4 +29,8 @@ public class RegistrationsController {
     public ResponseEntity<RegistrationsResponseDTO> registrationById(@PathVariable long id){
         return ResponseEntity.ok(registrationsService.findRegistrationById(id));
     }
+    @GetMapping("/email/{userEmail}")
+    public ResponseEntity<List<RegistrationsResponseDTO>> findRegistrationByUserEmail(@PathVariable String userEmail){
+        return ResponseEntity.ok(registrationsService.findRegistrationByUserEmail(userEmail));
+    }
 }
