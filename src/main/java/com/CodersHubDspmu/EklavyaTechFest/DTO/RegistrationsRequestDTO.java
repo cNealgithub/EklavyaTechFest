@@ -20,9 +20,8 @@ import java.util.Map;
 @Data
 public class RegistrationsRequestDTO {
 
-    private Users user;
-    private LocalDateTime registeredOn;
     private Events event;
+    //Hackathon - > 1
     private Map<String, Object> eventData;
     private String userEmail;
 }

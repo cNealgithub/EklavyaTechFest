@@ -55,4 +55,11 @@ public class RegistrationsServiceImpl implements RegistrationsService {
                 .map(registrations -> modelMapper.map(registrations, RegistrationsResponseDTO.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public RegistrationsResponseDTO findRegistrationById(long id) {
+        Registrations registration = registrationsRepo.findById(id).
+                orElseThrow(()-> new RuntimeException("Registration not found with id: "+id));
+        return modelMapper.map(registration, RegistrationsResponseDTO.class);
+    }
 }
