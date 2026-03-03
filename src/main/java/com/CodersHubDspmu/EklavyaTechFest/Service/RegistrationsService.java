@@ -6,7 +6,7 @@ import com.CodersHubDspmu.EklavyaTechFest.DTO.RegistrationsResponseDTO;
 import java.util.List;
 
 public interface RegistrationsService {
-     String addRegistration(RegistrationsRequestDTO registrationsRequestDTO);
+     RegistrationsResponseDTO addRegistration(RegistrationsRequestDTO registrationsRequestDTO);
 
      List<RegistrationsResponseDTO> getAllUsers();
 

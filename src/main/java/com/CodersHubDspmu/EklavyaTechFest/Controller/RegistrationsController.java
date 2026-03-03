@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/registers")
 @RequiredArgsConstructor
 public class RegistrationsController {
@@ -18,7 +19,7 @@ public class RegistrationsController {
     public final RegistrationsService registrationsService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> register(@RequestBody RegistrationsRequestDTO registrationsRequestDTO){
+    public ResponseEntity<RegistrationsResponseDTO> register(@RequestBody RegistrationsRequestDTO registrationsRequestDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(registrationsService.addRegistration(registrationsRequestDTO));
     }
     @GetMapping("/List")

@@ -25,7 +25,6 @@ public class Registrations {
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
     private Users user;
-    @CreatedDate
     private LocalDateTime registeredOn;
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)

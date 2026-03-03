@@ -11,8 +11,12 @@ public class UserResponseDTO {
     private long id;
     private String firstName;
     private String lastName;
+    private String gender;
     private String email;
     private String universityName;
+    private int semester;
+    private String department;
     private String phoneNo;
+    private String whatsAppNumber;
     private String fullAddress;
 }

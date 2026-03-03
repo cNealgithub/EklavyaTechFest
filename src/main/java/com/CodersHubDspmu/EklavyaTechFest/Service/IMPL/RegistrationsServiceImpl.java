@@ -9,10 +9,12 @@ import com.CodersHubDspmu.EklavyaTechFest.Repository.EventsRepo;
 import com.CodersHubDspmu.EklavyaTechFest.Repository.RegistrationsRepo;
 import com.CodersHubDspmu.EklavyaTechFest.Repository.UserRepo;
 import com.CodersHubDspmu.EklavyaTechFest.Service.RegistrationsService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,13 +28,29 @@ public class RegistrationsServiceImpl implements RegistrationsService {
     private final ModelMapper modelMapper;
 
     @Override
-    public String addRegistration(RegistrationsRequestDTO registrationsRequestDTO) {
+    @Transactional
+    public RegistrationsResponseDTO addRegistration(RegistrationsRequestDTO registrationsRequestDTO) {
 
         long eventId = registrationsRequestDTO.getEvent().getId();
         String email = registrationsRequestDTO.getUserEmail();
 
         Users user = userRepo.findByEmail(email)
-                .orElseThrow(()-> new RuntimeException("User Not registered with email "+registrationsRequestDTO.getUserEmail()));
+               .orElseGet(()-> {
+                           Users newUser = Users.builder()
+                                   .firstName(registrationsRequestDTO.getFirstName())
+                                   .lastName(registrationsRequestDTO.getLastName())
+                                   .gender(registrationsRequestDTO.getGender())
+                                   .email(email)
+                                   .fullAddress(registrationsRequestDTO.getFullAddress())
+                                   .phoneNo(registrationsRequestDTO.getPhoneNo())
+                                   .whatsAppNumber(registrationsRequestDTO.getWhatsAppNumber())
+                                   .universityName(registrationsRequestDTO.getUniversityName())
+                                   .semester(registrationsRequestDTO.getSemester())
+                                   .department(registrationsRequestDTO.getDepartment())
+                                   .build();
+                           return userRepo.save(newUser);
+                       });
+//
         Events events = eventsRepo.findById(eventId)
                 .orElseThrow(()-> new RuntimeException("Invalid event selection"));
         if (registrationsRepo.existsByUserAndEvent(user, events)) {
@@ -43,9 +61,10 @@ public class RegistrationsServiceImpl implements RegistrationsService {
                 .event(events)
                 .eventData(registrationsRequestDTO.getEventData())
                 .status("Approved")
+                .registeredOn(LocalDateTime.now())
                 .build();
         registrationsRepo.save(registration);
-        return "Registered successfully";
+        return modelMapper.map(registration, RegistrationsResponseDTO.class);
     }
 
     @Override

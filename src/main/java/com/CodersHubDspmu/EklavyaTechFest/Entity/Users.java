@@ -19,12 +19,20 @@ public class Users {
     @Column(nullable = false)
     private String firstName;
     private String lastName;
+    @Column(nullable = false)
+    private String gender;
     @Column(unique = true, nullable = false)
     private String email;
     @Column(nullable = false)
     private String universityName;
+    @Column(nullable = false)
+    private int semester;
+    @Column(nullable = false)
+    private String department;
     @Column(unique = true, nullable = false)
     private String phoneNo;
+    @Column(unique = true, nullable = false)
+    private String whatsAppNumber;
     @Column(nullable = false)
     private String fullAddress;
     @OneToMany(mappedBy = "user")
