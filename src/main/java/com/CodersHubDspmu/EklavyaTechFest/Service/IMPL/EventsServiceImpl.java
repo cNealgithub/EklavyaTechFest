@@ -4,7 +4,6 @@ import com.CodersHubDspmu.EklavyaTechFest.DTO.EventRequestDTO;
 import com.CodersHubDspmu.EklavyaTechFest.DTO.EventResponseDTO;
 import com.CodersHubDspmu.EklavyaTechFest.Entity.Events;
 import com.CodersHubDspmu.EklavyaTechFest.Repository.EventsRepo;
-import com.CodersHubDspmu.EklavyaTechFest.Repository.UserRepo;
 import com.CodersHubDspmu.EklavyaTechFest.Service.EventsService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,8 +28,8 @@ public class EventsServiceImpl implements EventsService {
                 .category(eventRequestDTO.getCategory())
                 .max_registration(eventRequestDTO.getMax_registration())
                 .build();
-        event = eventsRepo.save(event);
-        return modelMapper.map(event, EventResponseDTO.class);
+        Events savedEvent = eventsRepo.save(event);
+        return modelMapper.map(savedEvent, EventResponseDTO.class);
     }
 
     @Override
@@ -44,5 +44,33 @@ public class EventsServiceImpl implements EventsService {
         Events event = eventsRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Event not found with id: "+id));
         return modelMapper.map(event, EventResponseDTO.class);
+    }
+
+    @Override
+    public EventResponseDTO patchUpdate(long id, Map<String, Object> updates) {
+        Events event = eventsRepo.findById(id).
+                orElseThrow(()-> new EntityNotFoundException("Event not found with id: "+id));
+        updates.forEach((field, value) ->{
+            switch (field){
+                case "name" : event.setName((String) value);
+                break;
+                case "category" : event.setCategory((String) value);
+                break;
+                case "max_registration" : event.setMax_registration((Integer) value);
+                break;
+                default:
+                    throw new IllegalArgumentException("Invalid input");
+            }
+        });
+        Events savedEvent = eventsRepo.save(event);
+        return modelMapper.map(savedEvent, EventResponseDTO.class);
+    }
+
+    @Override
+    public void removeEventById(long id) {
+        if(!eventsRepo.existsById(id)){
+            throw new EntityNotFoundException("No event exists with id: "+id);
+        }
+        eventsRepo.deleteById(id);
     }
 }
