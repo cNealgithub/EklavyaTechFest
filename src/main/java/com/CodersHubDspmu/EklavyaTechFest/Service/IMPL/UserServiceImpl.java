@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -53,6 +54,46 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO findUserByEmail(String email) {
         Optional<Users> user = repo.findByEmail(email);
         return modelMapper.map(user, UserResponseDTO.class);
+    }
+
+    @Override
+    public UserResponseDTO patchUpdateUser(long id, Map<String, Object> updates) {
+        Users user = repo.findById(id).
+                orElseThrow(()-> new EntityNotFoundException("Entity not found with id: "+id));
+        updates.forEach((field, value) ->{
+                switch (field) {
+                    case "firstName":
+                        user.setFirstName((String) value);
+                        break;
+                    case "lastName" :
+                        user.setLastName((String) value);
+                        break;
+                    case "gender" :
+                        user.setGender((String) value);
+                        break;
+                    case "universityName" :
+                        user.setUniversityName((String) value);
+                        break;
+                    case "semester" :
+                        user.setSemester(Integer.parseInt((String) value));
+                        break;
+                    case "department" :
+                        user.setDepartment((String) value);
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Invalid input");
+                }
+                });
+        Users savedUser = repo.save(user);
+        return modelMapper.map(savedUser, UserResponseDTO.class);
+    }
+
+    @Override
+    public void deleteUserById(long id) {
+        if(!repo.existsById(id)){
+            throw new EntityNotFoundException("User not found with id: "+id);
+        }
+        repo.deleteById(id);
     }
 
 }

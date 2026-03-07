@@ -21,10 +21,6 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(userRequestDTO));
     }
-    @GetMapping("/userList")
-    public ResponseEntity<List<UserResponseDTO>> allUsers(){
-        return ResponseEntity.ok(userService.getAllUsers());
-    }
     @GetMapping("/user/{id}")
     public ResponseEntity<UserResponseDTO> userById(@PathVariable long id){
         return ResponseEntity.ok(userService.findUserById(id));

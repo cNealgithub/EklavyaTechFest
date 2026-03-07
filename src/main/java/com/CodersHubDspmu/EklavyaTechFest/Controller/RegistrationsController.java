@@ -22,10 +22,6 @@ public class RegistrationsController {
     public ResponseEntity<RegistrationsResponseDTO> register(@RequestBody RegistrationsRequestDTO registrationsRequestDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(registrationsService.addRegistration(registrationsRequestDTO));
     }
-    @GetMapping("/List")
-    public ResponseEntity<List<RegistrationsResponseDTO>> allRegistrations(){
-        return ResponseEntity.ok(registrationsService.getAllUsers());
-    }
     @GetMapping("/{id}")
     public ResponseEntity<RegistrationsResponseDTO> registrationById(@PathVariable long id){
         return ResponseEntity.ok(registrationsService.findRegistrationById(id));

@@ -56,7 +56,7 @@ public class EventsServiceImpl implements EventsService {
                 break;
                 case "category" : event.setCategory((String) value);
                 break;
-                case "max_registration" : event.setMax_registration((Integer) value);
+                case "max_registration" : event.setMax_registration(Integer.parseInt((String) value));
                 break;
                 default:
                     throw new IllegalArgumentException("Invalid input");
